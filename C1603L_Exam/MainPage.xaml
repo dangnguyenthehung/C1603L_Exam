@@ -9,6 +9,10 @@
 
     <Grid x:Name="Container" Margin="0" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Button x:Name="btn_CaptureImage" Content="Take Photo" HorizontalAlignment="Left" Height="42" Margin="416,370,0,0" VerticalAlignment="Top" Width="120" Click="btn_CaptureImage_Click" Background="#7FFA1E1E" />
+        <Button x:Name="btn_SaveImage" Content="Save Edited Photo" HorizontalAlignment="Left" Height="42" Margin="564,370,0,0" VerticalAlignment="Top" Width="150" Click="btn_SaveImage_Click" Background="#501E7DAA" />
+        <Button x:Name="btn_SaveImage_Original" Content="Save Original" HorizontalAlignment="Left" Height="42" Margin="747,370,0,0" VerticalAlignment="Top" Width="150" Click="btn_SaveImage_Original_Click" Background="#501EAA37" />
+
+
         <TextBlock Text="Filter" Margin="173,90,1041,605" FontSize="16" FontWeight="Bold"></TextBlock>
         <Button x:Name="btn_ApplyFilter_Blur" Content="Blur" HorizontalAlignment="Left" Height="42" Margin="173,120,0,0" VerticalAlignment="Top" Width="120" Click="btn_ApplyFilter_Blur_Click"/>
         <Button x:Name="btn_ApplyFilter_Hue" Content="Hue Rotation" HorizontalAlignment="Left" Height="42" Margin="173,170,0,0" VerticalAlignment="Top" Width="120" Click="btn_ApplyFilter_Hue_Click"/>
@@ -18,11 +22,13 @@
         <Button x:Name="btn_ApplyFilter_Exposure" Content="Exposure" HorizontalAlignment="Left" Height="42" Margin="173,370,0,0" VerticalAlignment="Top" Width="120" Click="btn_ApplyFilter_Exposure_Click"/>
         <Button x:Name="btn_ApplyFilter_Gamma" Content="Gamma" HorizontalAlignment="Left" Height="42" Margin="173,420,0,0" VerticalAlignment="Top" Width="120" Click="btn_ApplyFilter_Gamma_Click"/>
         <Button x:Name="btn_ApplyFilter_Grayscale" Content="Grayscale" HorizontalAlignment="Left" Height="42" Margin="173,470,0,0" VerticalAlignment="Top" Width="120" Click="btn_ApplyFilter_Grayscale_Click"/>
-
+        
         <TextBlock Text="Original" Margin="416,90,726,605" FontSize="14" FontWeight="Bold"></TextBlock>
         <Image x:Name="ImageFrame" HorizontalAlignment="Left" Height="220" Margin="416,120,0,0" VerticalAlignment="Top" Width="350"/>
         <TextBlock Text="Preview" Margin="886,90,250,605" FontSize="14" FontWeight="Bold"></TextBlock>
         <Image x:Name="ImageFrame_Filter" HorizontalAlignment="Left" Height="220" Margin="886,120,0,0" VerticalAlignment="Top" Width="350"/>
+        <TextBlock x:Name="txt_SavePath" HorizontalAlignment="Left" Height="40" Margin="416,460,0,0" TextWrapping="Wrap" Text="Saved Path Display Here" VerticalAlignment="Top" Width="820"/>
+        
 
     </Grid>
 </Page>

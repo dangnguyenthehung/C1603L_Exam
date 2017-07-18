@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -32,7 +33,7 @@ namespace C1603L_Exam
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        private string ImagePath = "";
+        private static string ImagePath = "";
 
         public MainPage()
         {
@@ -59,10 +60,9 @@ namespace C1603L_Exam
             //    Directory.CreateDirectory(saveFolder);
             //}
             //StorageFolder destinationFolder = await StorageFolder.GetFolderFromPathAsync(saveFolder);
-
-
+            
             StorageFolder destinationFolder =
-                await ApplicationData.Current.LocalFolder.CreateFolderAsync("CapturePhoto",
+                await ApplicationData.Current.LocalFolder.CreateFolderAsync(Constants.SaveImageInfomation.TempFolderName,
                     CreationCollisionOption.OpenIfExists);
 
             await photo.CopyAsync(destinationFolder, fileName, NameCollisionOption.ReplaceExisting);
@@ -73,6 +73,8 @@ namespace C1603L_Exam
             
             ImageFrame.Source = await Helper.ConvertToBitMap(stream);
         }
+
+        #region Apply Filter Events
 
         private async void btn_ApplyFilter_Blur_Click(object sender, RoutedEventArgs e)
         {
@@ -200,6 +202,21 @@ namespace C1603L_Exam
                     ImageFrame_Filter.Source = await Helper.ConvertToBitMap(inputStream);
                 }
             }
+        }
+
+        #endregion
+
+
+        private async void btn_SaveImage_Click(object sender, RoutedEventArgs e)
+        {
+            var editedPhotoPath = Path.Combine(ApplicationData.Current.LocalFolder.Path,Constants.SaveImageInfomation.TempFolderName,Constants.SaveImageInfomation.TempFileName);
+
+            txt_SavePath.Text = await Helper.SaveImage(editedPhotoPath);
+        }
+
+        private async void btn_SaveImage_Original_Click(object sender, RoutedEventArgs e)
+        {
+            txt_SavePath.Text = await Helper.SaveImage(ImagePath);
         }
     }
 }

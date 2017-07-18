@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -52,7 +53,7 @@ namespace C1603L_Exam
                 ds.DrawImage(blur);
             }
 
-            var saveFile = await SaveTempoaryFile(renderer);
+            var saveFile = await SaveTemporaryFile(renderer);
 
             return saveFile;
         }
@@ -73,7 +74,7 @@ namespace C1603L_Exam
                 ds.DrawImage(hue);
             }
 
-            var saveFile = await SaveTempoaryFile(renderer);
+            var saveFile = await SaveTemporaryFile(renderer);
 
             return saveFile;
         }
@@ -94,7 +95,7 @@ namespace C1603L_Exam
                 ds.DrawImage(saturation);
             }
 
-            var saveFile = await SaveTempoaryFile(renderer);
+            var saveFile = await SaveTemporaryFile(renderer);
 
             return saveFile;
         }
@@ -118,7 +119,7 @@ namespace C1603L_Exam
                 ds.DrawImage(saturation);
             }
 
-            var saveFile = await SaveTempoaryFile(renderer);
+            var saveFile = await SaveTemporaryFile(renderer);
 
             return saveFile;
         }
@@ -139,7 +140,7 @@ namespace C1603L_Exam
                 ds.DrawImage(saturation);
             }
 
-            var saveFile = await SaveTempoaryFile(renderer);
+            var saveFile = await SaveTemporaryFile(renderer);
 
             return saveFile;
         }
@@ -160,7 +161,7 @@ namespace C1603L_Exam
                 ds.DrawImage(saturation);
             }
 
-            var saveFile = await SaveTempoaryFile(renderer);
+            var saveFile = await SaveTemporaryFile(renderer);
 
             return saveFile;
         }
@@ -184,7 +185,7 @@ namespace C1603L_Exam
                 ds.DrawImage(saturation);
             }
 
-            var saveFile = await SaveTempoaryFile(renderer);
+            var saveFile = await SaveTemporaryFile(renderer);
 
             return saveFile;
         }
@@ -204,18 +205,18 @@ namespace C1603L_Exam
                 ds.DrawImage(saturation);
             }
 
-            var saveFile = await SaveTempoaryFile(renderer);
+            var saveFile = await SaveTemporaryFile(renderer);
 
             return saveFile;
         }
 
-        public static async Task<StorageFile> SaveTempoaryFile(CanvasRenderTarget renderer)
+        public static async Task<StorageFile> SaveTemporaryFile(CanvasRenderTarget renderer)
         {
             StorageFolder destinationFolder =
-                await ApplicationData.Current.LocalFolder.CreateFolderAsync("CapturePhoto",
+                await ApplicationData.Current.LocalFolder.CreateFolderAsync(Constants.SaveImageInfomation.TempFolderName,
                     CreationCollisionOption.OpenIfExists);
 
-            var saveFile = await destinationFolder.CreateFileAsync("temp.jpg", CreationCollisionOption.ReplaceExisting);
+            var saveFile = await destinationFolder.CreateFileAsync(Constants.SaveImageInfomation.TempFileName, CreationCollisionOption.ReplaceExisting);
 
             using (var outStream = await saveFile.OpenAsync(FileAccessMode.ReadWrite))
             {
@@ -223,6 +224,31 @@ namespace C1603L_Exam
             }
 
             return saveFile;
+        }
+
+        public static async Task<string> SaveImage(string imagePath)
+        {
+            try
+            {
+                StorageFolder destinationFolder =
+                await ApplicationData.Current.LocalFolder.CreateFolderAsync(Constants.SaveImageInfomation.SaveFolderName,
+                    CreationCollisionOption.OpenIfExists);
+
+                StorageFile file = await StorageFile.GetFileFromPathAsync(imagePath);
+
+                var fileName = $"{Helper.GetImageName()}.jpg";
+
+                await file.CopyAsync(destinationFolder, fileName, NameCollisionOption.ReplaceExisting);
+                //await file.DeleteAsync();
+
+                var savedPath = Path.Combine(ApplicationData.Current.LocalFolder.Path, Constants.SaveImageInfomation.SaveFolderName, fileName);
+                return savedPath;
+            }
+            catch (Exception ex)
+            {
+                return "No file to save";
+            }
+            
         }
     }
 }
